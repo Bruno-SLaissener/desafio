@@ -1,0 +1,12 @@
+services:
+  rinning:
+    image: desafio
+    privileged: true
+    command: dpkg-query -W tensorrt 
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
