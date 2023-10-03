@@ -11,9 +11,13 @@ int main(int arg, char *argv[]) {
 
     // building pipeline
     pipeline = gst_parse_launch(
-            "v4l2src device=/dev/video0 ! xvimagesink",
+            "v4l2src ! tee name=t \
+                                t. ! queue ! videoscale ! video/x-raw,width=640,height=480 ! \
+                                    videoconvert ! autovideosink \
+                                t. ! queue ! videoscale ! video/x-raw,width=360,height=240 ! \
+                                    videoconvert ! autovideosink",
             nullptr);
-            //"playbin uri=https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm",
+            
 
     // start playing
     gst_element_set_state(pipeline, GST_STATE_PLAYING);
