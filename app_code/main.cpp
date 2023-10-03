@@ -19,7 +19,9 @@ int main(int arg, char *argv[]) {
     gst_init(&arg, &argv);
 
     // building pipeline
-    pipeline = gst_parse_launch("v4l2src device=/dev/video0 ! video/x-raw,format=YUY2,width=640,height=480,framerate=30/1 ! queue !  identity ! shmsink wait-for-connection=1 socket-path=/app_code/tmp/tmpsock  shm-size=20000000 sync=true",
+    pipeline = gst_parse_launch("v4l2src device=/dev/video0 ! tee name=t \ 
+                                t. ! xvimagesink \
+                                t. ! video/x-raw,format=YUY2,width=640,height=480,framerate=30/1 ! queue !  identity ! shmsink wait-for-connection=1 socket-path=/app_code/tmp/tmpsock  shm-size=20000000 sync=true",
             nullptr);
             
 
@@ -33,8 +35,7 @@ int main(int arg, char *argv[]) {
     cap.open("shmsrc socket-path=/app_code/tmp/tmpsock ! video/x-raw, format=YUY2, width=640, height=480, pixel-aspect-ratio=1/1, framerate=30/1 ! decodebin ! videoconvert ! appsink");
 
     std::cout << "Ok4" << std::endl;
-    //std::string gst_str = "appsrc ! videoconvert ! shmsink socket-path=/gst/tmp/out sync=true wait-for-connection=false shm-size=10000000";
-    
+        
     for (;;)
     {
         // wait for a new frame from camera and store it into 'frame'
