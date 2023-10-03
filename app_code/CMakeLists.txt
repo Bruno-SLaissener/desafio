@@ -20,8 +20,20 @@ link_directories(
         ${GSTREAMER_LIBRARY_DIRS}
 )
 
+
 #building target executable
 add_executable(${PROJECT_NAME} main.cpp)
 
 #linking Gstreamer library with target executable
 target_link_libraries(${PROJECT_NAME} ${GSTREAMER_LIBRARIES})
+
+## finfing cuda
+find_package(CUDA  REQUIRED)
+include_directories("${CUDA_INCLUDE_DIRS}")
+
+find_package(OpenCV REQUIRED )
+
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+
+include_directories ("/usr/include/opencv4/")
+
