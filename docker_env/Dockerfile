@@ -62,6 +62,6 @@ RUN apt install -y g++ cmake pkg-config
 ###installing opencv
 RUN apt install libopencv-dev
 
-WORKDIR /gst
+WORKDIR /app_code
 
 RUN rm -rf /var/lib/apt/lists/*

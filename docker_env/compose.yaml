@@ -2,7 +2,13 @@ services:
   rinning:
     image: desafio
     privileged: true
-    command: dpkg-query -W tensorrt 
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ../app_code:/app_code
+    network_mode: host
+    command: bash bash.sh
     deploy:
       resources:
         reservations:
