@@ -1,3 +1,4 @@
 *.deb
 *.png
+.vscode
 app_code/build

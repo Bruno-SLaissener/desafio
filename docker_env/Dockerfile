@@ -62,6 +62,16 @@ RUN apt install -y g++ cmake pkg-config
 ###installing opencv
 RUN apt install libopencv-dev
 
+### Installing yolov5_tensorRT lib (from https://github.com/noahmr/yolov5-tensorrt)
+WORKDIR /tmp
+
+RUN git clone https://github.com/noahmr/yolov5-tensorrt.git
+RUN cd yolov5-tensorrt
+RUN mkdir build && cd build
+RUN cmake /tmp/yolov5-tensorrt -DBUILD_PYTHON=OFF
+RUN make && make install
+
+### Going to the app dir
 WORKDIR /app_code
 
 RUN rm -rf /var/lib/apt/lists/*

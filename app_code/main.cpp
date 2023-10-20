@@ -1,7 +1,16 @@
 #include <iostream>
+
 #include <gst/gst.h>
+#include "yolov5_detector.hpp"
+
+
 
 int main(int arg, char *argv[]) {
+
+    //Testing the yolo lib
+    yolov5::Detector detector;
+    yolov5::Result r = detector.init();
+
     GstElement *pipeline = nullptr;
     GstBus *bus = nullptr;
     GstMessage *msg = nullptr;
